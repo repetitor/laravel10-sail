@@ -3,7 +3,6 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -24,18 +23,26 @@ Route::get('test', function () {
 });
 
 Route::prefix('parents')->group(function () {
-    Route::get('', function () {return 'parents';});
+    Route::get('', function () {
+        return 'parents';
+    });
     // ...CRUD1
 
     Route::prefix('{id}')->group(function () {
-        Route::get('', function (int $id) {return "parent $id";});
+        Route::get('', function (int $id) {
+            return "parent $id";
+        });
         // ...CRUD2
 
         Route::prefix('babies')->group(function () {
-            Route::get('', function ($id) {return "babies of parent $id";});
+            Route::get('', function ($id) {
+                return "babies of parent $id";
+            });
             // ...CRUD3
 
-            Route::get('{idBaby}', function (int $id, int $idBaby) {return "parent $id - baby $idBaby";});
+            Route::get('{idBaby}', function (int $id, int $idBaby) {
+                return "parent $id - baby $idBaby";
+            });
             // ...CRUD4
         });
     });
