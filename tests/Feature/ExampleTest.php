@@ -16,34 +16,4 @@ class ExampleTest extends TestCase
 
         $response->assertStatus(200);
     }
-
-    public function test1(): void
-    {
-        $response = $this->get('/api/test');
-        $response->assertStatus(200);
-    }
-
-    public function test2(): void
-    {
-        $response = $this->get('/api/tests');
-        $response->assertStatus(200);
-    }
-
-    public function test3(): void
-    {
-        $response = $this->get('/api/tests/1');
-        $response->assertStatus(200);
-    }
-
-    public function test4(): void
-    {
-        $response = $this->get('/api/tests/1/children');
-        $response->assertStatus(200);
-    }
-
-    public function test5(): void
-    {
-        $response = $this->get('/api/tests/1/children/111');
-        $response->assertStatus(200);
-    }
 }

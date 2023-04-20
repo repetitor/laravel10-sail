@@ -20,36 +20,23 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('test', function () {
-    return 'test202';
+    return url()->current();
 });
 
-Route::prefix('tests')->group(function () {
-    Route::get('', function () {return 'ok';});
+Route::prefix('parents')->group(function () {
+    Route::get('', function () {return 'parents';});
     // ...CRUD1
 
     Route::prefix('{id}')->group(function () {
-        Route::get('', function (int $id) {return $id;});
+        Route::get('', function (int $id) {return "parent $id";});
         // ...CRUD2
 
-        Route::prefix('children')->group(function () {
-            Route::get('', function ($id) {return $id;});
+        Route::prefix('babies')->group(function () {
+            Route::get('', function ($id) {return "babies of parent $id";});
             // ...CRUD3
 
-            Route::get('{idChild}', function (int $idChild, int $id) {return "$id - $idChild";});
+            Route::get('{idBaby}', function (int $id, int $idBaby) {return "parent $id - baby $idBaby";});
             // ...CRUD4
-
-//            Route::prefix('{idChild}')->group(function () {
-////                Route::get('', function (int $idChild, int $id) {return ENTITY . '/' . $id . '/' . CHILDREN . '/' . $idChild;});
-//                Route::get('', function () {return url()->current();});
-//                // ...CRUD4
-//            });
         });
     });
 });
-//Route::prefix(CHILDREN. '/{id}/' . CHILDREN . '/{idChild}')->group(function () {
-//    Route::get('', function (int $idChild, int $id) {
-////        return ENTITY . '/' . $id . '/' . CHILDREN . '/' . $idChild;
-////        return url()->current();
-//    });
-//    // ...CRUD4
-//});
