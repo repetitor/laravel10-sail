@@ -1,6 +1,8 @@
 <?php
 
+use App\Mail\OrderShipped;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,6 +25,7 @@ Route::get('test-telescope', function () {
 });
 
 Route::get('test', function () {
-    $s = new \App\Services\MailService();
-    $s->envelope();
+//    $s = new \App\Services\MailService();
+//    $s->envelope();
+    Mail::to('repetitor202@gmail.com')->send(new OrderShipped());
 });
