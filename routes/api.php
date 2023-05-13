@@ -25,7 +25,9 @@ Route::get('test-telescope', function () {
 });
 
 Route::get('test', function () {
-//    $s = new \App\Services\MailService();
-//    $s->envelope();
     Mail::to('repetitor202@gmail.com')->send(new OrderShipped());
+});
+
+Route::get('/mailable', function () {
+    return new App\Mail\OrderShipped();
 });
