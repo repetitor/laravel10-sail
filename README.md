@@ -33,3 +33,9 @@ https://www.postman.com/repetitor202/workspace/bot-telegram
 
 docker pull repetitor202/bot-telegram:sail-8.2
 
+
+## xdebug
+
+server-name: sail
+
+path-mapping: path-to-project:/var/www/html
