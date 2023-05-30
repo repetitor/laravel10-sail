@@ -1,0 +1,100 @@
+{
+	"info": {
+		"_postman_id": "19523e0f-1d08-45b9-89bb-a9eb03ba346e",
+		"name": "Bot",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15807573"
+	},
+	"item": [
+		{
+			"name": "getMe",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{host}}/api/telegram-bot/me",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"telegram-bot",
+						"me"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getUpdates",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{host}}/api/telegram-bot/updates",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"telegram-bot",
+						"updates"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "saveUpdates",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{host}}/api/telegram-bot/updates",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"telegram-bot",
+						"updates"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
