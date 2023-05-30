@@ -24,3 +24,7 @@ https://api.postman.com/collections/15807573-19523e0f-1d08-45b9-89bb-a9eb03ba346
 # postman-workspace
 
 https://www.postman.com/galactic-star-406581/workspace/telegrambot
+
+# postman-workspace r202
+
+https://www.postman.com/repetitor202/workspace/bot-telegram
