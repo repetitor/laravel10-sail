@@ -16,9 +16,9 @@ class TelegramBotService
         $this->uri = 'https://api.telegram.org/bot'.config('telegram.bot_token');
     }
 
-    public function getMe(): string
+    public function getMe(): array
     {
-        return Http::get($this->uri.'/getMe');
+        return json_decode(Http::get($this->uri.'/getMe'), true);
     }
 
     public function getUpdates(): string

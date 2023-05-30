@@ -13,7 +13,7 @@ class TelegramBotController extends Controller
         $this->service = $service;
     }
 
-    public function getMe(): string
+    public function getMe()
     {
         return $this->service->getMe();
     }
