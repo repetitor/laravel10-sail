@@ -13,16 +13,49 @@ class TelegramBotController extends Controller
         $this->service = $service;
     }
 
+    /**
+     * Get me.
+     *
+     * @OA\Get(
+     *  path="/api/telegram-bot/me",
+     *  tags={"TelegramApi"},
+     *
+     *  @OA\Response(response="200", description="OK", @OA\JsonContent()),
+     *  @OA\Response(response="default", description="Error", @OA\JsonContent()),
+     * )
+     */
     public function getMe()
     {
         return $this->service->getMe();
     }
 
+    /**
+     * Get updates.
+     *
+     * @OA\Get(
+     *  path="/api/telegram-bot/updates",
+     *  tags={"TelegramApi"},
+     *
+     *  @OA\Response(response="200", description="OK", @OA\JsonContent()),
+     *  @OA\Response(response="default", description="Error", @OA\JsonContent()),
+     * )
+     */
     public function getUpdates()
     {
         return $this->service->getUpdates();
     }
 
+    /**
+     * Save updates.
+     *
+     * @OA\Post(
+     *  path="/api/telegram-bot/updates",
+     *  tags={"TelegramApi"},
+     *
+     *  @OA\Response(response="200", description="OK", @OA\JsonContent()),
+     *  @OA\Response(response="default", description="Error", @OA\JsonContent()),
+     * )
+     */
     public function saveUpdates()
     {
         return BotUpdateResource::collection($this->service->saveUpdates());

@@ -1,0 +1,88 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Documentation",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/telegram-bot/me": {
+            "get": {
+                "tags": [
+                    "TelegramApi"
+                ],
+                "summary": "Get me.",
+                "operationId": "c6960de70a13a2da920ee8f9ba07bcdf",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/telegram-bot/updates": {
+            "get": {
+                "tags": [
+                    "TelegramApi"
+                ],
+                "summary": "Get updates.",
+                "operationId": "4857c59e056bd1cde605b90c02518b31",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "TelegramApi"
+                ],
+                "summary": "Save updates.",
+                "operationId": "c47c039bc11e6bb4ea633deccbebc009",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
