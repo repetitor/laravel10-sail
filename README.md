@@ -16,3 +16,9 @@ composer install --ignore-platform-reqs
 # sail
 # https://laravel.com/docs/10.x/sail
 ```
+
+##xdebug
+
+server-name: sail
+
+path-mapping: path-to-project:/var/www/html
