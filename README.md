@@ -28,3 +28,8 @@ https://www.postman.com/galactic-star-406581/workspace/telegrambot
 # postman-workspace r202
 
 https://www.postman.com/repetitor202/workspace/bot-telegram
+
+# dockerhub
+
+docker pull repetitor202/bot-telegram:sail-8.2
+
