@@ -1,0 +1,112 @@
+{
+	"info": {
+		"_postman_id": "cf470dae-3bcd-4183-a738-ecf09992abfa",
+		"name": "Laravel",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "13005796-cf470dae-3bcd-4183-a738-ecf09992abfa"
+	},
+	"item": [
+		{
+			"name": "getMe",
+			"id": "6506f7f5-f3e7-44f1-bd0f-cb4893473d60",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{host}}/api/telegram-bot/me",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"telegram-bot",
+						"me"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getUpdates",
+			"id": "8cb44d3b-6e7d-4e69-a966-55d5d6ecfbe9",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{host}}/api/telegram-bot/updates",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"telegram-bot",
+						"updates"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "saveUpdates",
+			"id": "1ba99536-f2e4-4f84-9611-a2eaaed6b7e7",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{host}}/api/telegram-bot/updates",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"telegram-bot",
+						"updates"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
