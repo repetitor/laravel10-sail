@@ -57,7 +57,7 @@ class TelegramBotService
         return BotUpdate::all();
     }
 
-    public function trySaveHost(
+    private function trySaveHost(
         int $fromId,
         ?string $text,
     ): void {
