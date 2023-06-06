@@ -3,12 +3,19 @@
 namespace App\Services\Telegram;
 
 use App\Models\BotUpdate;
+use App\Models\Host;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
 class TelegramBotService
 {
+    private const LATITUDE_KEY = 'lt';
+
+    private const LONGITUDE_KEY = 'lg';
+
+    private const DESCRIPTION_KEY = 'd';
+
     private string $uri;
 
     public function __construct()
@@ -40,8 +47,39 @@ class TelegramBotService
             } catch (\Exception $e) {
                 Log::debug($e->getMessage());
             }
+
+            $this->trySaveHost(
+                $update['message']['from']['id'],
+                $update['message']['text'] ?? null,
+            );
         }
 
         return BotUpdate::all();
+    }
+
+    public function trySaveHost(
+        int $fromId,
+        ?string $text,
+    ): void {
+        parse_str($text, $res);
+
+        if (is_array($res)) {
+            $host = new Host();
+            $host->from_id = $fromId;
+
+            foreach ($res as $k => $v) {
+                if ($k === self::LATITUDE_KEY) {
+                    $host->latitude = $v;
+                }
+                if ($k === self::LONGITUDE_KEY) {
+                    $host->longitude = $v;
+                }
+                if ($k === self::DESCRIPTION_KEY) {
+                    $host->description = $v;
+                }
+            }
+
+            $host->save();
+        }
     }
 }
