@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Telegram;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\BotUpdateResource;
+use App\Http\Resources\HostResource;
 use App\Services\Telegram\TelegramBotService;
 
 class TelegramBotController extends Controller
@@ -59,5 +60,21 @@ class TelegramBotController extends Controller
     public function saveUpdates()
     {
         return BotUpdateResource::collection($this->service->saveUpdates());
+    }
+
+    /**
+     * Get my hosts.
+     *
+     * @OA\Post(
+     *  path="/api/telegram-bot/hosts",
+     *  tags={"TelegramApi"},
+     *
+     *  @OA\Response(response="200", description="OK", @OA\JsonContent()),
+     *  @OA\Response(response="default", description="Error", @OA\JsonContent()),
+     * )
+     */
+    public function getMyHosts()
+    {
+        return $this->service->getMyHosts() ? HostResource::collection($this->service->getMyHosts()) : null;
     }
 }

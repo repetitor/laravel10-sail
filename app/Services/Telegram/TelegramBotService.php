@@ -82,4 +82,20 @@ class TelegramBotService
             $host->save();
         }
     }
+
+    public function getMyHosts(): ?Collection
+    {
+        $updates = Http::get($this->uri.'/getUpdates');
+        foreach ($updates['result'] as $update) {
+            if (isset($update['message']['entities'])
+                && isset($update['message']['entities'][0]['type'])
+                && $update['message']['entities'][0]['type'] === 'bot_command') {
+                if ($update['message']['text'] === '/my_hosts') {
+                    return Host::where('from_id', $update['message']['from']['id'])->get();
+                }
+            }
+        }
+
+        return null;
+    }
 }

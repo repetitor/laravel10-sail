@@ -18,4 +18,5 @@ Route::prefix('telegram-bot')->namespace('Telegram')->group(function () {
     Route::get('me', [TelegramBotController::class, 'getMe']);
     Route::get('updates', [TelegramBotController::class, 'getUpdates']);
     Route::post('updates', [TelegramBotController::class, 'saveUpdates']);
+    Route::get('my-hosts', [TelegramBotController::class, 'getMyHosts']);
 });
