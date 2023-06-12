@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,10 +14,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::post('la-login', function () {
+    $user = \App\Models\User::find(1);
+
+    $token = Str::random(60);
+
+    $user->api_token = hash('sha256', $token);
+    $user->save();
+
+    return ['token' => $token];
 });
 
-Route::get('test', function () {
-    return response(['message' => 'hello from telescope!']);
+Route::middleware('auth:api')->post('la-test', function () {
+    return 'ok';
 });
