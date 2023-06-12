@@ -28,3 +28,5 @@ Route::post('la-login', function () {
 Route::middleware('auth:api')->post('la-test', function () {
     return 'ok';
 });
+
+Route::middleware('auth:api')->apiResource('posts', \App\Http\Controllers\PostController::class);
