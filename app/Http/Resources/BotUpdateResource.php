@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Enums\CommandEnum;
 use App\Models\BotUpdate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -22,6 +23,8 @@ class BotUpdateResource extends JsonResource
             'message_id' => $this->message_id,
             'date' => $this->date,
             'text' => $this->text,
+            //            'command' => $this->command,
+            'command' => CommandEnum::tryFrom($this->command)?->value,
         ];
     }
 }

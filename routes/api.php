@@ -21,6 +21,10 @@ Route::prefix('telegram-bot')->namespace('Telegram')->group(function () {
     Route::get('my-hosts', [TelegramBotController::class, 'getMyHosts']);
 });
 
+Route::prefix('bot-updates')->group(function () {
+    Route::get('', [\App\Http\Controllers\BotUpdateController::class, 'index']);
+});
+
 Route::get('commands', function () {
     return \App\Enums\CommandEnum::cases();
 });
