@@ -2,9 +2,11 @@
 
 namespace App\Services\Telegram;
 
+use App\Enums\CommandEnum;
 use App\Models\BotUpdate;
 use App\Models\Host;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
@@ -33,7 +35,7 @@ class TelegramBotService
         return Http::get($this->uri.'/getUpdates');
     }
 
-    public function saveUpdates(): Collection
+    public function treatUpdates(): Collection
     {
         $updates = Http::get($this->uri.'/getUpdates');
         foreach ($updates['result'] as $update) {
@@ -43,15 +45,35 @@ class TelegramBotService
                     'message_id' => $update['message']['message_id'],
                     'date' => $update['message']['date'],
                     'text' => $update['message']['text'],
+                    //                    'command' => $update['message']['command'],
                 ]);
             } catch (\Exception $e) {
                 Log::debug($e->getMessage());
             }
 
-            $this->trySaveHost(
-                $update['message']['from']['id'],
-                $update['message']['text'] ?? null,
-            );
+            $message = $update['message'];
+            if (
+                isset($message['entities'])
+                && isset($message['entities']['type'])
+                && $message['entities']['type'] === 'bot_command'
+            ) {
+                $text = $message['text'];
+                parse_str($text, $textParsed);
+
+                if (Arr::has($textParsed, '/store')) {
+                    $this->trySaveHost(
+                        $update['message']['from']['id'],
+                        $update['message']['text'] ?? null,
+                    );
+                }
+
+                if (Arr::has($textParsed, '/update')) {
+                    $this->tryUpdateHost(
+                        $update['message']['from']['id'],
+                        $update['message']['text'] ?? null,
+                    );
+                }
+            }
         }
 
         return BotUpdate::all();
@@ -97,5 +119,31 @@ class TelegramBotService
         }
 
         return null;
+    }
+
+    public function tryUpdateHost(
+        int $fromId,
+        ?string $text,
+    ): void {
+        parse_str($text, $res);
+
+        if (is_array($res)) {
+            if (Arr::has($res, CommandEnum::Update->value) && Arr::has($res, 'id')) {
+                $host = Host::where('id', $res['id'])->first();
+                foreach ($res as $k => $v) {
+                    if ($k === self::LATITUDE_KEY) {
+                        $host->latitude = $v;
+                    }
+                    if ($k === self::LONGITUDE_KEY) {
+                        $host->longitude = $v;
+                    }
+                    if ($k === self::DESCRIPTION_KEY) {
+                        $host->description = $v;
+                    }
+                }
+            }
+
+            $host->save();
+        }
     }
 }
