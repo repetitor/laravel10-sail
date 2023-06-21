@@ -19,6 +19,11 @@ Route::prefix('telegram-bot')->namespace('Telegram')->group(function () {
     Route::get('updates', [TelegramBotController::class, 'getUpdates']);
     Route::post('updates', [TelegramBotController::class, 'saveUpdates']);
     Route::get('my-hosts', [TelegramBotController::class, 'getMyHosts']);
+    Route::get('test-response', function () {
+        $s = new \App\Services\Telegram\TelegramBotService();
+
+        return $s->getTestResponse();
+    });
 });
 
 Route::prefix('bot-updates')->group(function () {

@@ -35,6 +35,100 @@ class TelegramBotService
         return Http::get($this->uri.'/getUpdates');
     }
 
+    public function getTestResponse(): array
+    {
+        $str = '{
+    "ok": true,
+    "result": [
+        {
+            "update_id": 424876518,
+            "message": {
+                "message_id": 254,
+                "from": {
+                    "id": 394257307,
+                    "is_bot": false,
+                    "first_name": "Viktar",
+                    "last_name": "Repetitor202",
+                    "username": "repetitor202",
+                    "language_code": "en"
+                },
+                "chat": {
+                    "id": 394257307,
+                    "first_name": "Viktar",
+                    "last_name": "Repetitor202",
+                    "username": "repetitor202",
+                    "type": "private"
+                },
+                "date": 1687344319,
+                "text": "123"
+            }
+        },
+        {
+            "update_id": 424876519,
+            "message": {
+                "message_id": 255,
+                "from": {
+                    "id": 394257307,
+                    "is_bot": false,
+                    "first_name": "Viktar",
+                    "last_name": "Repetitor202",
+                    "username": "repetitor202",
+                    "language_code": "en"
+                },
+                "chat": {
+                    "id": 394257307,
+                    "first_name": "Viktar",
+                    "last_name": "Repetitor202",
+                    "username": "repetitor202",
+                    "type": "private"
+                },
+                "date": 1687344323,
+                "text": "/show",
+                "entities": [
+                    {
+                        "offset": 0,
+                        "length": 5,
+                        "type": "bot_command"
+                    }
+                ]
+            }
+        },
+        {
+            "update_id": 424876520,
+            "message": {
+                "message_id": 256,
+                "from": {
+                    "id": 394257307,
+                    "is_bot": false,
+                    "first_name": "Viktar",
+                    "last_name": "Repetitor202",
+                    "username": "repetitor202",
+                    "language_code": "en"
+                },
+                "chat": {
+                    "id": 394257307,
+                    "first_name": "Viktar",
+                    "last_name": "Repetitor202",
+                    "username": "repetitor202",
+                    "type": "private"
+                },
+                "date": 1687344329,
+                "text": "/show id=123",
+                "entities": [
+                    {
+                        "offset": 0,
+                        "length": 5,
+                        "type": "bot_command"
+                    }
+                ]
+            }
+        }
+    ]
+}';
+
+        return json_decode($str, true);
+    }
+
     public function treatUpdates(): Collection
     {
         $updates = Http::get($this->uri.'/getUpdates');
