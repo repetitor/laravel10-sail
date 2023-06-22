@@ -22,6 +22,7 @@ class HostResource extends JsonResource
             'latitude' => $this->latitude,
             'longitude' => $this->longitude,
             'description' => $this->description,
+            'updated_at' => $this->updated_at,
         ];
     }
 }

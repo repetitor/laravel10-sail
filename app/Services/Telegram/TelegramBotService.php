@@ -134,89 +134,50 @@ class TelegramBotService
         $updates = Http::get($this->uri.'/getUpdates');
 //        $updates = $this->getTestResponse();
 
-        foreach ($updates['result'] as $update) {
-            try {
-                BotUpdate::create([
-                    'update_id' => $update['update_id'],
-                    'message_id' => $update['message']['message_id'],
-                    'date' => $update['message']['date'],
-                    'text' => $update['message']['text'],
-                    //                    'command' => $update['message']['command'],
-                ]);
-            } catch (\Exception $e) {
-                Log::debug($e->getMessage());
-            }
+        $hosts = new Collection();
 
+        foreach ($updates['result'] as $update) {
             $message = $update['message'];
+
             if (
                 isset($message['entities'])
                 && isset($message['entities'][0])
                 && isset($message['entities'][0]['type'])
                 && $message['entities'][0]['type'] === 'bot_command'
             ) {
-                $text = $message['text'];
-                parse_str($text, $textParsed);
+                parse_str($message['text'], $textParsed);
 
-                if (Arr::has($textParsed, '/store')) {
-                    $this->trySaveHost(
-                        $update['message']['from']['id'],
-                        $update['message']['text'] ?? null,
-                    );
+                if (Arr::has($textParsed, CommandEnum::Store->value)) {
+                    $command = CommandEnum::Store->value;
+                    $host = new Host();
+                    $host->from_id = $message['from']['id'];
+                    $hostNew = $this->createUpdateHost($host, $textParsed);
                 }
 
-                if (Arr::has($textParsed, '/update')) {
-                    $this->tryUpdateHost(
-                        $update['message']['from']['id'],
-                        $update['message']['text'] ?? null,
-                    );
+                if (Arr::has($textParsed, CommandEnum::Update->value) && Arr::has($textParsed, 'id')) {
+                    $command = CommandEnum::Update->value;
+                    $host = Host::where('id', $textParsed['id'])->first();
+                    $hostNew = $this->createUpdateHost($host, $textParsed);
                 }
+
+                $hosts->add($hostNew);
+            }
+
+            try {
+                BotUpdate::create([
+                    'update_id' => $update['update_id'],
+                    'message_id' => $message['message_id'],
+                    'date' => $message['date'],
+                    'text' => $message['text'],
+                    'command' => $command ?? null,
+                ]);
+            } catch (\Exception $e) {
+                Log::debug($e->getMessage());
             }
         }
 
-        return BotUpdate::all();
-    }
-
-    private function trySaveHost(
-        int $fromId,
-        ?string $text,
-    ): void {
-        parse_str($text, $res);
-
-        if (is_array($res)) {
-            $host = new Host();
-            $host->from_id = $fromId;
-            $hostNew = $this->createUpdateHost($host, $res);
-        }
-    }
-
-    public function getMyHosts(): ?Collection
-    {
-        $updates = Http::get($this->uri.'/getUpdates');
-        foreach ($updates['result'] as $update) {
-            if (isset($update['message']['entities'])
-                && isset($update['message']['entities'][0]['type'])
-                && $update['message']['entities'][0]['type'] === 'bot_command') {
-                if ($update['message']['text'] === '/my_hosts') {
-                    return Host::where('from_id', $update['message']['from']['id'])->get();
-                }
-            }
-        }
-
-        return null;
-    }
-
-    public function tryUpdateHost(
-        int $fromId,
-        ?string $text,
-    ): void {
-        parse_str($text, $res);
-
-        if (is_array($res)) {
-            if (Arr::has($res, CommandEnum::Update->value) && Arr::has($res, 'id')) {
-                $host = Host::where('id', $res['id'])->first();
-                $hostNew = $this->createUpdateHost($host, $res);
-            }
-        }
+//        return BotUpdate::all();
+        return $hosts;
     }
 
     private function createUpdateHost(Host $host, array $params): Host
@@ -236,5 +197,21 @@ class TelegramBotService
         $host->save();
 
         return $host;
+    }
+
+    public function getMyHosts(): ?Collection
+    {
+        $updates = Http::get($this->uri.'/getUpdates');
+        foreach ($updates['result'] as $update) {
+            if (isset($update['message']['entities'])
+                && isset($update['message']['entities'][0]['type'])
+                && $update['message']['entities'][0]['type'] === 'bot_command') {
+                if ($update['message']['text'] === '/my_hosts') {
+                    return Host::where('from_id', $update['message']['from']['id'])->get();
+                }
+            }
+        }
+
+        return null;
     }
 }

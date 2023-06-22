@@ -7,8 +7,9 @@ enum CommandEnum: string
 {
     case Find = '/find';
     case Index = '/index';
+    case MyHosts = '/my_hosts';
+    case Show = '/show';
     case Store = '/store';
-    case Show = 'show';
     case Update = '/update';
     case Destroy = '/destroy';
 }

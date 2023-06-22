@@ -59,7 +59,8 @@ class TelegramBotController extends Controller
      */
     public function saveUpdates()
     {
-        return BotUpdateResource::collection($this->service->treatUpdates());
+        return HostResource::collection($this->service->treatUpdates());
+//        return BotUpdateResource::collection($this->service->treatUpdates());
     }
 
     /**
