@@ -83,7 +83,7 @@ class TelegramBotService
                     "type": "private"
                 },
                 "date": 1687344323,
-                "text": "/show",
+                "text": "/store&lt=2333&lg=3&d=descr",
                 "entities": [
                     {
                         "offset": 0,
@@ -113,7 +113,7 @@ class TelegramBotService
                     "type": "private"
                 },
                 "date": 1687344329,
-                "text": "/show id=123",
+                "text": "/update&id=19&lt=22&lg=23&d=descr22323 hghg2332 hghgh",
                 "entities": [
                     {
                         "offset": 0,
@@ -132,6 +132,8 @@ class TelegramBotService
     public function treatUpdates(): Collection
     {
         $updates = Http::get($this->uri.'/getUpdates');
+//        $updates = $this->getTestResponse();
+
         foreach ($updates['result'] as $update) {
             try {
                 BotUpdate::create([
@@ -148,8 +150,9 @@ class TelegramBotService
             $message = $update['message'];
             if (
                 isset($message['entities'])
-                && isset($message['entities']['type'])
-                && $message['entities']['type'] === 'bot_command'
+                && isset($message['entities'][0])
+                && isset($message['entities'][0]['type'])
+                && $message['entities'][0]['type'] === 'bot_command'
             ) {
                 $text = $message['text'];
                 parse_str($text, $textParsed);
@@ -182,20 +185,7 @@ class TelegramBotService
         if (is_array($res)) {
             $host = new Host();
             $host->from_id = $fromId;
-
-            foreach ($res as $k => $v) {
-                if ($k === self::LATITUDE_KEY) {
-                    $host->latitude = $v;
-                }
-                if ($k === self::LONGITUDE_KEY) {
-                    $host->longitude = $v;
-                }
-                if ($k === self::DESCRIPTION_KEY) {
-                    $host->description = $v;
-                }
-            }
-
-            $host->save();
+            $hostNew = $this->createUpdateHost($host, $res);
         }
     }
 
@@ -224,20 +214,27 @@ class TelegramBotService
         if (is_array($res)) {
             if (Arr::has($res, CommandEnum::Update->value) && Arr::has($res, 'id')) {
                 $host = Host::where('id', $res['id'])->first();
-                foreach ($res as $k => $v) {
-                    if ($k === self::LATITUDE_KEY) {
-                        $host->latitude = $v;
-                    }
-                    if ($k === self::LONGITUDE_KEY) {
-                        $host->longitude = $v;
-                    }
-                    if ($k === self::DESCRIPTION_KEY) {
-                        $host->description = $v;
-                    }
-                }
+                $hostNew = $this->createUpdateHost($host, $res);
             }
-
-            $host->save();
         }
+    }
+
+    private function createUpdateHost(Host $host, array $params): Host
+    {
+        foreach ($params as $k => $v) {
+            if ($k === self::LATITUDE_KEY) {
+                $host->latitude = $v;
+            }
+            if ($k === self::LONGITUDE_KEY) {
+                $host->longitude = $v;
+            }
+            if ($k === self::DESCRIPTION_KEY) {
+                $host->description = $v;
+            }
+        }
+
+        $host->save();
+
+        return $host;
     }
 }
