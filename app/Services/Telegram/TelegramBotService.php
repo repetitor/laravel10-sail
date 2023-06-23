@@ -3,6 +3,7 @@
 namespace App\Services\Telegram;
 
 use App\Enums\CommandEnum;
+use App\Http\Resources\HostResource;
 use App\Models\BotUpdate;
 use App\Models\Host;
 use Illuminate\Database\Eloquent\Collection;
@@ -152,15 +153,22 @@ class TelegramBotService
                     $host = new Host();
                     $host->from_id = $message['from']['id'];
                     $hostNew = $this->createUpdateHost($host, $textParsed);
+
+                    $hosts->add($hostNew);
+
+//                    Http::get('https://api.telegram.org/bot6010132260:AAHCUMUAvpz_bsaQKavFa1vIzVa5izMw_CU/sendMessage?chat_id=394257307&text=test-text-lalalala' . serialize($hostNew));
+                    ////                    Http::get('https://api.telegram.org/bot6010132260:AAHCUMUAvpz_bsaQKavFa1vIzVa5izMw_CU/sendMessage?chat_id=394257307&text=test-text-lalalala' . serialize(new HostResource($hostNew)));
+//                    Http::get('https://api.telegram.org/bot6010132260:AAHCUMUAvpz_bsaQKavFa1vIzVa5izMw_CU/sendMessage?chat_id=394257307&text=test-text-lalalala' . "\n -id $hostNew->id -d $hostNew->description");
+                    $this->sendBotHostResponse($hostNew);
                 }
 
                 if (Arr::has($textParsed, CommandEnum::Update->value) && Arr::has($textParsed, 'id')) {
                     $command = CommandEnum::Update->value;
                     $host = Host::where('id', $textParsed['id'])->first();
                     $hostNew = $this->createUpdateHost($host, $textParsed);
-                }
 
-                $hosts->add($hostNew);
+                    $hosts->add($hostNew);
+                }
             }
 
             try {
@@ -213,5 +221,27 @@ class TelegramBotService
         }
 
         return null;
+    }
+
+    private function sendBotHostResponse(Host $host): void
+    {
+        $lt = $host->latitude;
+        $lg = $host->longitude;
+        $url = "https://www.google.com/maps/search/?q=$lt,$lg";
+
+        $info = "
+        -id $host->id
+        -latitude $host->latitude
+        -longitude $host->longitude
+        -d $host->description
+        url: ".$url.'
+        ';
+
+//        Http::get($this->uri . '/sendMessage?chat_id=394257307&text=' . $info);
+
+        if ($lt) {
+            Http::get($this->uri.'/sendMessage?chat_id=394257307&text='.$url);
+//            Http::get($this->uri . '/sendMessage?chat_id=394257307&text=https://www.google.com/maps/search/?q=40.6974881,-73.979681');
+        }
     }
 }
