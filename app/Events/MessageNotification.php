@@ -40,4 +40,12 @@ class MessageNotification implements ShouldBroadcast
     {
         return 'my-event';
     }
+
+    public function broadcastWith(): array
+    {
+        return [
+            'heya' => 123,
+            'message' => $this->message,
+        ];
+    }
 }

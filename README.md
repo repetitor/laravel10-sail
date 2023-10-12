@@ -16,3 +16,10 @@ composer install --ignore-platform-reqs
 # sail
 # https://laravel.com/docs/10.x/sail
 ```
+
+http://localhost:90/laravel-websockets
+
+http://localhost:90/event
+
+
+php artisan websockets:serve

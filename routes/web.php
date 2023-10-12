@@ -19,6 +19,8 @@ Route::get('/', function () {
 
 Route::get('event', function () {
     event(new \App\Events\MessageNotification('broadcast-message'));
+
+    return null;
 });
 
 Route::get('listen', function () {
