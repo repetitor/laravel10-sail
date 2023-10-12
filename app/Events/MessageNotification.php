@@ -33,4 +33,11 @@ class MessageNotification implements ShouldBroadcast
             new Channel('channel-name'),
         ];
     }
+
+    // default name of event - App\Events\MessageNotification
+    // to apply default - to comment this method
+    public function broadcastAs(): string
+    {
+        return 'my-event';
+    }
 }
