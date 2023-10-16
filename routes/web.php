@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ButtonClickedController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,3 +27,7 @@ Route::get('event', function () {
 Route::get('listen', function () {
     return 'lalala';
 });
+
+Route::get('ws', [\App\Http\Controllers\WsController::class, 'test']);
+
+Route::post('button/clicked', ButtonClickedController::class);
