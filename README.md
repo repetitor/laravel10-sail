@@ -21,7 +21,10 @@ http://localhost:90/laravel-websockets
 
 http://localhost:90/event
 
+local-pusher
 
-php artisan websockets:serve
+1 php artisan websockets:serve
+
+2? npm run dev
 
 https://www.honeybadger.io/blog/a-guide-to-using-websockets-in-laravel/
