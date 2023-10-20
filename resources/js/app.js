@@ -16,4 +16,6 @@ Echo.channel('public-channel')
 
         // Display the "message" in an alert box
         alert(e.message);
+
+        window.axios.post('/ws', {'msg': 'fff'});
     });

@@ -29,5 +29,6 @@ Route::get('listen', function () {
 });
 
 Route::get('ws', [\App\Http\Controllers\WsController::class, 'test']);
+Route::post('ws', [\App\Http\Controllers\WsController::class, 'testPost']);
 
 Route::post('button/clicked', ButtonClickedController::class);
