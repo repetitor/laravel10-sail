@@ -19,5 +19,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('test', function () {
-    return response(['message' => 'hello from telescope!']);
+//    return \App\Models\User::find(1)->phone;
+    return \App\Models\Phone::find(1)->user;
 });
