@@ -19,6 +19,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('test', function () {
-//    return \App\Models\User::find(1)->phone;
-    return \App\Models\Phone::find(1)->user;
+//    return \App\Models\User::find(1)?->phone;
+//    return \App\Models\Phone::find(1)?->user;
+
+//    return \App\Models\Post::find(1)?->comments;
+    return \App\Models\Comment::find(1)?->post;
 });
