@@ -5,22 +5,39 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 class Post extends Model
 {
     use HasFactory;
 
-    /**
-     * Get the comments for the blog post.
-     */
-    public function comments(): HasMany
-    {
-        return $this->hasMany(Comment::class);
+//    /**
+//     * Get the comments for the blog post.
+//     */
+//    public function comments(): HasMany
+//    {
+//        return $this->hasMany(Comment::class);
+//
+    ////        return $this->hasMany(
+    ////            related: Comment::class,
+    ////            foreignKey: 'post_id',
+    ////            localKey: 'id',
+    ////        );
+//    }
 
-//        return $this->hasMany(
+    /**
+     * Get all the post's comments.
+     */
+    public function comments(): MorphMany
+    {
+        return $this->morphMany(Comment::class, 'commentable');
+
+//        return $this->morphMany(
 //            related: Comment::class,
-//            foreignKey: 'post_id',
+//            name: 'commentable',
+//            type: 'commentable_type',
+//            id: 'commentable_id',
 //            localKey: 'id',
 //        );
     }

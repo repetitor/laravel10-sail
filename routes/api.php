@@ -29,5 +29,8 @@ Route::get('test', function () {
 //    return \App\Models\Role::find(1)?->users;
 
 //    return \App\Models\User::find(1)?->image;
-    return \App\Models\Image::find(1)?->imageable;
+//    return \App\Models\Image::find(1)?->imageable;
+
+//    return \App\Models\Post::find(1)?->comments;
+    return \App\Models\Comment::find(1)?->commentable;
 });
