@@ -23,5 +23,8 @@ Route::get('test', function () {
 //    return \App\Models\Phone::find(1)?->user;
 
 //    return \App\Models\Post::find(1)?->comments;
-    return \App\Models\Comment::find(1)?->post;
+//    return \App\Models\Comment::find(1)?->post;
+
+//    return \App\Models\User::find(1)?->roles;
+    return \App\Models\Role::find(1)?->users;
 });

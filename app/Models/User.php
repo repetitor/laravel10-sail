@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -54,6 +55,24 @@ class User extends Authenticatable
 //            related: Phone::class,
 //            foreignKey: 'user_id',
 //            localKey: 'id',
+//        );
+    }
+
+    /**
+     * The roles that belong to the user.
+     */
+    public function roles(): BelongsToMany
+    {
+        return $this->belongsToMany(Role::class);
+
+//        return $this->belongsToMany(
+//            related: Role::class,
+//            table: 'role_user',
+//            foreignPivotKey: 'user_id',
+//            relatedPivotKey: 'role_id',
+//            parentKey: 'id',
+//            relatedKey: 'id',
+//            relation: 'roles',
 //        );
     }
 }
