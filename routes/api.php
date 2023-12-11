@@ -32,5 +32,8 @@ Route::get('test', function () {
 //    return \App\Models\Image::find(1)?->imageable;
 
 //    return \App\Models\Post::find(1)?->comments;
-    return \App\Models\Comment::find(1)?->commentable;
+//    return \App\Models\Comment::find(1)?->commentable;
+
+//    return \App\Models\Post::find(1)?->tags;
+    return \App\Models\Tag::find(1)?->posts;
 });

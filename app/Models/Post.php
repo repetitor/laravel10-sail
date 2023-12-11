@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class Post extends Model
 {
@@ -48,5 +49,25 @@ class Post extends Model
     public function image(): MorphOne
     {
         return $this->morphOne(Image::class, 'imageable');
+    }
+
+    /**
+     * Get all the tags for the post.
+     */
+    public function tags(): MorphToMany
+    {
+        return $this->morphToMany(Tag::class, 'taggable');
+
+//        return $this->morphToMany(
+//            related: Tag::class,
+//            name: 'taggable',
+//            table: 'taggables',
+//            foreignPivotKey: 'taggable_id',
+//            relatedPivotKey: 'tag_id',
+//            parentKey: 'id',
+//            relatedKey: 'id',
+//            relation: 'tags',
+//            inverse: false,
+//        );
     }
 }
